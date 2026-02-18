@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <title>{{ if .Title }}{{ .Title }} | {{ end }}My Hugo Blog</title>
+  <meta name="description" content="{{ .Params.description | default " My Hugo Blog" }}">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="{{ .Title }}">
+  <meta property="og:description" content="{{ .Params.description }}">
+  {{ with .Params.thumbnail }}
+  <meta property="og:image" content="{{ . }}">
+  {{ end }}
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ .Title }}">
+  <meta name="twitter:description" content="{{ .Params.description }}">
+  {{ with .Params.thumbnail }}
+  <meta name="twitter:image" content="{{ . }}">
+  {{ end }}
+
+  {{ $css := resources.Get "css/main.css" | css.PostCSS }}
+  <link rel="stylesheet" href="{{ $css.RelPermalink }}">
+</head>
+
+<body class="bg-gray-50 text-gray-900">
+  {{ block "main" . }}{{ end }}
+</body>
+
+</html>
