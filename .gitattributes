@@ -1,0 +1,6 @@
+# Ensure image files are always tracked
+static/images/uploads/* linguist-generated=false
+*.jpg linguist-generated=false
+*.png linguist-generated=false
+*.gif linguist-generated=false
+*.webp linguist-generated=false
