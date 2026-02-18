@@ -1,6 +1,7 @@
 <nav class="w-full max-w-[600px] mx-auto pt-4 pb-8">
   <div class="w-full px-4 flex justify-center items-center">
-    <a href="{{ " /" | relURL }}">
+    {{ $homeURL := "/" | relURL }}
+    <a href="{{ $homeURL }}">
       {{ $logoPath := "/images/valyafm-logo.png" }}
       {{ $logoSrc := cond (hasPrefix $logoPath "/") (printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $logoPath))
       ($logoPath | absURL) }}
