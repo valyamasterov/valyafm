@@ -2,8 +2,9 @@
   <div class="w-full px-4 flex justify-center items-center">
     <a href="{{ " /" | relURL }}">
       {{ $logoPath := "/images/valyafm-logo.png" }}
-      <img src="{{ if hasPrefix $logoPath " /" }}{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" $logoPath }}{{ else }}{{
-        $logoPath | absURL }}{{ end }}" alt="logo" class="h-12">
+      {{ $logoSrc := cond (hasPrefix $logoPath "/") (printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $logoPath))
+      ($logoPath | absURL) }}
+      <img src="{{ $logoSrc }}" alt="logo" class="h-12">
     </a>
   </div>
 </nav>
