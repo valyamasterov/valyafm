@@ -2,8 +2,10 @@
 <article class="max-w-[600px] mx-auto py-16 px-4 prose">
   <h1>{{ .Title }}</h1>
   {{ with .Params.thumbnail }}
-  <img src="{{ if hasPrefix . " /" }}{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" . }}{{ else }}{{ . | absURL }}{{ end
-    }}" alt="{{ $.Title }}" class="my-4 rounded-lg shadow-md">
+  {{ $imgPath := . }}
+  {{ $imgSrc := cond (hasPrefix $imgPath "/") (printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $imgPath)) ($imgPath
+  | absURL) }}
+  <img src="{{ $imgSrc }}" alt="{{ $.Title }}" class="my-4 rounded-lg shadow-md">
   {{ end }}
   {{ .Content }}
 </article>

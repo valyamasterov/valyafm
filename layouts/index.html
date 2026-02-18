@@ -5,8 +5,10 @@
     <div class="flex flex-col w-full">
       <a href="{{ .RelPermalink }}">
         {{ with .Params.thumbnail }}
-        <img src="{{ if hasPrefix . " /" }}{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" . }}{{ else }}{{ . | absURL
-          }}{{ end }}" alt="{{ $.Title }}" class="w-full aspect-square object-cover block">
+        {{ $imgPath := . }}
+        {{ $imgSrc := cond (hasPrefix $imgPath "/") (printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $imgPath))
+        ($imgPath | absURL) }}
+        <img src="{{ $imgSrc }}" alt="{{ $.Title }}" class="w-full aspect-square object-cover block">
         {{ end }}
       </a>
       <div class="mt-2 w-full">
