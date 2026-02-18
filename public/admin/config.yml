@@ -2,14 +2,16 @@ backend:
   name: github
   repo: valyamasterov/valyafm
   branch: main
+  base_url: http://localhost:1313
+  auth_scope: repo
 
 media_folder: "static/images/uploads"
 public_folder: "/images/uploads"
 
 collections:
-  - name: "posts"
-    label: "Posts"
-    folder: "content/posts"
+  - name: "entries"
+    label: "Entries"
+    folder: "content/entries"
     create: true
     slug: "{{slug}}"
     fields:

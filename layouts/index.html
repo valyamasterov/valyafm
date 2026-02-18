@@ -1,15 +1,22 @@
 {{ define "main" }}
-<div class="max-w-7xl mx-auto py-16 px-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-  {{ range .Pages }}
-  <a href="{{ .RelPermalink }}" class="relative group">
-    {{ with .Params.thumbnail }}
-    <img src="{{ . }}" alt="{{ $.Title }}"
-      class="w-full h-48 object-cover rounded-lg shadow-md group-hover:scale-105 transition-transform duration-300">
-    {{ end }}
-    <div class="absolute bottom-2 left-2 bg-black bg-opacity-50 text-white px-2 py-1 rounded">
-      {{ .Title }}
+<div class="w-full mx-auto px-4" style="max-width: 600px;">
+  <div class="flex flex-col gap-4">
+    {{ range where .Site.RegularPages "Section" "entries" }}
+    <div class="flex flex-col w-full">
+      <a href="{{ .RelPermalink }}">
+        {{ with .Params.thumbnail }}
+        <img src="{{ . | absURL }}" alt="{{ $.Title }}" class="w-full aspect-square object-cover block">
+        {{ end }}
+      </a>
+      <div class="mt-2 w-full">
+        <a href="{{ .RelPermalink }}">
+          <p class="font-medium">{{ .Title }}</p>
+        </a>
+        {{ with .Params.description }}
+        <p class="text-sm text-gray-600">{{ . }}</p>
+        {{ end }}
+      </div>
     </div>
-  </a>
+    {{ end }}
+  </div>
   {{ end }}
-</div>
-{{ end }}

@@ -1,0 +1,11 @@
+# Hugo build output
+/docs/
+/public/
+/resources/_gen/
+
+# Node modules
+node_modules/
+
+# OS files
+.DS_Store
+Thumbs.db
