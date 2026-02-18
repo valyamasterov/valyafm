@@ -2,10 +2,10 @@
 <html lang="en">
 
 <head>
-	<meta name="generator" content="Hugo 0.155.3">
+	<meta name="generator" content="Hugo 0.155.3"><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script>
   <meta charset="utf-8">
-  <title>My New Hugo Site | My Hugo Blog</title>
-  <meta name="description" content=" My Hugo Blog">
+  <title>My New Hugo Site | valya fm</title>
+  <meta name="description" content=" valya fm">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   
@@ -20,44 +20,174 @@
   
 
   
-  <link rel="stylesheet" href="/valyafm/css/main.css">
+  <link rel="stylesheet" href="/css/main.css">
 </head>
 
-<body class="bg-white text-gray-900">
-  <nav class="w-full max-w-[600px] mx-auto pt-4 pb-8">
-  <div class="w-full px-4 flex justify-center items-center">
-    
-    <a href="/">
-      
-      
-      <img src="https://valyamasterov.github.io/valyafm/images/valyafm-logo.png" alt="logo" class="h-12">
-    </a>
+<body class="bg-white text-gray-900 overflow-hidden">
+  <nav class="fixed top-0 left-0 right-0 z-50 bg-white">
+  <div class="w-full max-w-[600px] mx-auto pt-6 pb-4">
+    <div class="w-full px-4 flex flex-col items-center gap-2">
+      <a href="/valyafm/">
+        
+        
+        <img src="http://localhost:1313/images/valyafm-logo.png" alt="logo" class="h-12">
+      </a>
+      <div class="flex gap-4">
+        <button id="nav-updates" class="nav-btn active cursor-pointer" data-view="updates">updates</button>
+        <button id="nav-projects" class="nav-btn cursor-pointer" data-view="projects">projects</button>
+      </div>
+    </div>
   </div>
 </nav>
   
-<div class="w-full mx-auto px-4" style="max-width: 600px;">
-  <div class="flex flex-col gap-4">
-    
-    <div class="flex flex-col w-full">
-      <a href="/valyafm/entries/two-steps-forward-one-step-back/">
+
+<div id="updates-view" class="view-content fixed top-0 left-0 right-0 bottom-0 overflow-y-auto pt-[140px]">
+  <div class="w-full mx-auto px-4 pb-16" style="max-width: 600px;">
+    <div class="flex flex-col w-full gap-16">
+      
+      <article class="flex flex-col w-full">
+        <div class="flex justify-between items-center w-full mb-4">
+          <h2 class="font-medium text-lg">after hours</h2>
+          
+          <p class="text-sm text-gray-600">February 18, 2026</p>
+          
+        </div>
         
         
         
-        <img src="https://valyamasterov.github.io/valyafm/images/uploads/a0094159187_16.jpg" alt="My New Hugo Site" class="w-full aspect-square object-cover block">
+        <img src="http://localhost:1313/media/uploads/afterhours.gif" alt="My New Hugo Site" class="w-full object-cover">
         
-      </a>
-      <div class="mt-2 w-full">
-        <a href="/valyafm/entries/two-steps-forward-one-step-back/">
-          <p class="font-medium">two steps forward, one step back</p>
-        </a>
+        <div class="mt-4">
+          
+        </div>
+      </article>
+      
+      <article class="flex flex-col w-full">
+        <div class="flex justify-between items-center w-full mb-4">
+          <h2 class="font-medium text-lg">a short sketch</h2>
+          
+          <p class="text-sm text-gray-600">February 18, 2026</p>
+          
+        </div>
         
-        <p class="text-sm text-gray-600">3 track EP</p>
         
-      </div>
+        
+        
+        <div class="w-full">
+          <audio controls class="w-full">
+            <source src="http://localhost:1313/media/uploads/11-feb-loop.mp3" type="audio/mpeg">
+            <source src="http://localhost:1313/media/uploads/11-feb-loop.mp3" type="audio/ogg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
+        
+        
+        <div class="mt-4">
+          
+          <div class="prose prose-sm max-w-none">
+            T﻿his is a test text description abount entry.
+          </div>
+          
+        </div>
+      </article>
+      
     </div>
-    
   </div>
-  
+</div>
+
+
+<div id="projects-view" class="view-content hidden fixed top-0 left-0 right-0 bottom-0 overflow-y-auto pt-[140px]">
+  <div class="w-full mx-auto px-4 pb-16" style="max-width: 1200px;">
+    <div class="grid grid-cols-3 gap-4">
+      
+      <div class="flex flex-col w-full">
+        <a href="/entries/two-steps-forward-one-step-back/">
+          
+          
+          
+          <img src="http://localhost:1313/images/uploads/a0094159187_16.jpg" alt="My New Hugo Site" class="w-full aspect-square object-cover block">
+          
+        </a>
+        <div class="mt-2 w-full">
+          <a href="/entries/two-steps-forward-one-step-back/">
+            <p class="font-medium text-sm">two steps forward, one step back</p>
+          </a>
+          
+          <p class="text-xs text-gray-600">3 track EP</p>
+          
+        </div>
+      </div>
+      
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentView = urlParams.get('view') || 'updates';
+
+    function showView(view) {
+      document.getElementById('updates-view').classList.toggle('hidden', view !== 'updates');
+      document.getElementById('projects-view').classList.toggle('hidden', view !== 'projects');
+
+      document.getElementById('nav-updates').classList.toggle('active', view === 'updates');
+      document.getElementById('nav-projects').classList.toggle('active', view === 'projects');
+
+      const newUrl = new URL(window.location);
+      if (view === 'updates') {
+        newUrl.searchParams.delete('view');
+      } else {
+        newUrl.searchParams.set('view', view);
+      }
+      window.history.pushState({ view }, '', newUrl);
+    }
+
+    document.getElementById('nav-updates').addEventListener('click', () => showView('updates'));
+    document.getElementById('nav-projects').addEventListener('click', () => showView('projects'));
+
+    window.addEventListener('popstate', (e) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const view = urlParams.get('view') || 'updates';
+      showView(view);
+    });
+
+    showView(currentView);
+  })();
+</script>
+
+<style>
+  .nav-btn {
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav-btn.active {
+    border-bottom: 1px solid #000;
+  }
+
+  .view-content {
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+    scrollbar-width: none;
+     
+    -ms-overflow-style: none;
+     
+    -webkit-overflow-scrolling: touch;
+     
+  }
+
+  #updates-view,
+  #projects-view {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .view-content::-webkit-scrollbar {
+    display: none;
+     
+  }
+</style>
+
 </body>
 
 </html>

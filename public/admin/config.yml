@@ -5,10 +5,21 @@ backend:
   base_url: http://localhost:1313
   auth_scope: repo
 
-media_folder: "static/images/uploads"
-public_folder: "/images/uploads"
+media_folder: "static/media/uploads"
+public_folder: "/media/uploads"
 
 collections:
+  - name: "posts"
+    label: "Posts"
+    folder: "content/posts"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime", required: false }
+      - { label: "Image", name: "image", widget: "image", required: false }
+      - { label: "Audio", name: "audio", widget: "file", required: false }
+      - { label: "Text", name: "text", widget: "markdown", required: false }
   - name: "entries"
     label: "Entries"
     folder: "content/entries"
@@ -16,6 +27,7 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Title", name: "title", widget: "string" }
+      - { label: "Publish Date", name: "date", widget: "datetime", required: false }
       - { label: "Description", name: "description", widget: "string" }
       - { label: "Thumbnail", name: "thumbnail", widget: "image" }
       - { label: "Body", name: "body", widget: "markdown" }

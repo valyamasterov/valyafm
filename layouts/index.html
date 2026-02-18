@@ -1,25 +1,140 @@
 {{ define "main" }}
-<div class="w-full mx-auto px-4" style="max-width: 600px;">
-  <div class="flex flex-col gap-4">
-    {{ range where .Site.RegularPages "Section" "entries" }}
-    <div class="flex flex-col w-full">
-      <a href="{{ .RelPermalink }}">
-        {{ with .Params.thumbnail }}
+<!-- Posts Feed -->
+<div id="updates-view" class="view-content fixed top-0 left-0 right-0 bottom-0 overflow-y-auto pt-[140px]">
+  <div class="w-full mx-auto px-4 pb-16" style="max-width: 600px;">
+    <div class="flex flex-col w-full gap-16">
+      {{ range where .Site.RegularPages "Section" "posts" }}
+      <article class="flex flex-col w-full">
+        <div class="flex justify-between items-center w-full mb-4">
+          <h2 class="font-medium text-lg">{{ .Title }}</h2>
+          {{ if .Date }}
+          <p class="text-sm text-gray-600">{{ .Date.Format "February 2, 2006" }}</p>
+          {{ end }}
+        </div>
+        {{ with .Params.image }}
         {{ $imgPath := . }}
         {{ $imgSrc := cond (hasPrefix $imgPath "/") (printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $imgPath))
         ($imgPath | absURL) }}
-        <img src="{{ $imgSrc }}" alt="{{ $.Title }}" class="w-full aspect-square object-cover block">
+        <img src="{{ $imgSrc }}" alt="{{ $.Title }}" class="w-full object-cover">
+        {{ else }}
+        {{ with .Params.audio }}
+        {{ $audioPath := . }}
+        {{ $audioSrc := cond (hasPrefix $audioPath "/") (printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/"
+        $audioPath))
+        ($audioPath | absURL) }}
+        <div class="w-full">
+          <audio controls class="w-full">
+            <source src="{{ $audioSrc }}" type="audio/mpeg">
+            <source src="{{ $audioSrc }}" type="audio/ogg">
+            Your browser does not support the audio element.
+          </audio>
+        </div>
         {{ end }}
-      </a>
-      <div class="mt-2 w-full">
-        <a href="{{ .RelPermalink }}">
-          <p class="font-medium">{{ .Title }}</p>
-        </a>
-        {{ with .Params.description }}
-        <p class="text-sm text-gray-600">{{ . }}</p>
         {{ end }}
-      </div>
+        <div class="mt-4">
+          {{ with .Params.text }}
+          <div class="prose prose-sm max-w-none">
+            {{ . | $.RenderString }}
+          </div>
+          {{ end }}
+        </div>
+      </article>
+      {{ end }}
     </div>
-    {{ end }}
   </div>
-  {{ end }}
+</div>
+
+<!-- Projects Grid -->
+<div id="projects-view" class="view-content hidden fixed top-0 left-0 right-0 bottom-0 overflow-y-auto pt-[140px]">
+  <div class="w-full mx-auto px-4 pb-16" style="max-width: 1200px;">
+    <div class="grid grid-cols-3 gap-4">
+      {{ range where .Site.RegularPages "Section" "entries" }}
+      <div class="flex flex-col w-full">
+        <a href="{{ .RelPermalink }}">
+          {{ with .Params.thumbnail }}
+          {{ $imgPath := . }}
+          {{ $imgSrc := cond (hasPrefix $imgPath "/") (printf "%s%s" $.Site.BaseURL (strings.TrimPrefix "/" $imgPath))
+          ($imgPath | absURL) }}
+          <img src="{{ $imgSrc }}" alt="{{ $.Title }}" class="w-full aspect-square object-cover block">
+          {{ end }}
+        </a>
+        <div class="mt-2 w-full">
+          <a href="{{ .RelPermalink }}">
+            <p class="font-medium text-sm">{{ .Title }}</p>
+          </a>
+          {{ with .Params.description }}
+          <p class="text-xs text-gray-600">{{ . }}</p>
+          {{ end }}
+        </div>
+      </div>
+      {{ end }}
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentView = urlParams.get('view') || 'updates';
+
+    function showView(view) {
+      document.getElementById('updates-view').classList.toggle('hidden', view !== 'updates');
+      document.getElementById('projects-view').classList.toggle('hidden', view !== 'projects');
+
+      document.getElementById('nav-updates').classList.toggle('active', view === 'updates');
+      document.getElementById('nav-projects').classList.toggle('active', view === 'projects');
+
+      const newUrl = new URL(window.location);
+      if (view === 'updates') {
+        newUrl.searchParams.delete('view');
+      } else {
+        newUrl.searchParams.set('view', view);
+      }
+      window.history.pushState({ view }, '', newUrl);
+    }
+
+    document.getElementById('nav-updates').addEventListener('click', () => showView('updates'));
+    document.getElementById('nav-projects').addEventListener('click', () => showView('projects'));
+
+    window.addEventListener('popstate', (e) => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const view = urlParams.get('view') || 'updates';
+      showView(view);
+    });
+
+    showView(currentView);
+  })();
+</script>
+
+<style>
+  .nav-btn {
+    border-bottom: 1px solid transparent;
+  }
+
+  .nav-btn.active {
+    border-bottom: 1px solid #000;
+  }
+
+  .view-content {
+    scroll-behavior: smooth;
+    overscroll-behavior: none;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE and Edge */
+    -webkit-overflow-scrolling: touch;
+    /* iOS momentum scrolling */
+  }
+
+  #updates-view,
+  #projects-view {
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .view-content::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari, Opera */
+  }
+</style>
+{{ end }}

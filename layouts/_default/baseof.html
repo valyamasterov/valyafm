@@ -3,8 +3,8 @@
 
 <head>
   <meta charset="utf-8">
-  <title>{{ if .Title }}{{ .Title }} | {{ end }}My Hugo Blog</title>
-  <meta name="description" content="{{ .Params.description | default " My Hugo Blog" }}">
+  <title>{{ if .Title }}{{ .Title }} | {{ end }}valya fm</title>
+  <meta name="description" content="{{ .Params.description | default " valya fm" }}">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- Open Graph -->
@@ -26,7 +26,7 @@
   <link rel="stylesheet" href="{{ $css.RelPermalink }}">
 </head>
 
-<body class="bg-white text-gray-900">
+<body class="bg-white text-gray-900 overflow-hidden">
   {{ partial "nav.html" . }}
   {{ block "main" . }}{{ end }}
 </body>
