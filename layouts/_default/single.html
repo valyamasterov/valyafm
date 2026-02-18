@@ -2,7 +2,8 @@
 <article class="max-w-[600px] mx-auto py-16 px-4 prose">
   <h1>{{ .Title }}</h1>
   {{ with .Params.thumbnail }}
-  <img src="{{ . | absURL }}" alt="{{ $.Title }}" class="my-4 rounded-lg shadow-md">
+  <img src="{{ if hasPrefix . " /" }}{{ $.Site.BaseURL }}{{ strings.TrimPrefix "/" . }}{{ else }}{{ . | absURL }}{{ end
+    }}" alt="{{ $.Title }}" class="my-4 rounded-lg shadow-md">
   {{ end }}
   {{ .Content }}
 </article>
