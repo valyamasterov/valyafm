@@ -1,3 +1,4 @@
-baseURL = 'https://example.org/'
+baseURL = 'https://valyamasterov.github.io/valyafm/'
 languageCode = 'en-us'
 title = 'My New Hugo Site'
+publishDir = 'docs'
